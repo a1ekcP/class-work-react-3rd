@@ -1,16 +1,20 @@
-
 import { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Product from './Product';
 import CartGroup from './CartGroup';
-import ContextTheme from '../context/ContextTheme';
+import ContextValues from '../context/ContextValues';
+import FormGroup from './FormGroup';
 
 
 
 function Products(){
     const [productsArr, setProductsArr] = useState([]);
+    const [user, setUser] = useState({login: '', email: ''})
     
-
+    useEffect(() => {
+        let userInStore = localStorage.getItem('LastUser');
+        userInStore ? setUser(JSON.parse(userInStore)) : setUser('');
+    }, [])
     useEffect(()=>{
         setProductsArr([
             {   
@@ -149,20 +153,19 @@ function Products(){
     function removeProd(id){
         setProductsArr(productsArr.map(el => el.id === id ? ({...el, count: el.count <= 1 ? el.count = 1 : el.count -=1}) : el));
     }
-    let value = {addProd, removeProd, clickRemove, clickAdd}
+
+    let value = {addProd, removeProd, clickRemove, clickAdd, user, setUser}
 
 
     return <>
-        <ContextTheme.Provider value={value}>
-            <Row xs={1} md={3} className="g-4 p-4">
+        <ContextValues.Provider value={value}>
+            <FormGroup user={user} setUser={setUser}/>
+            <Row xs={1} md={3} className={`g-4 p-4 my-4`}>
                 {productsArr.map(el => <Product key ={el.id} product={el} />)}
             </Row>
             <CartGroup filteredProducts={productsArr.filter(el => el.addToCart)}/>
-        </ContextTheme.Provider>
+        </ContextValues.Provider>
     </>
 }
-
-
-
 
 export default Products;

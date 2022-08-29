@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import ContextTheme from '../context/ContextTheme';
+import ContextValues from '../context/ContextValues';
 
 function Product({product}){
-    const {clickRemove, clickAdd} = useContext(ContextTheme);
+    const {clickRemove, clickAdd} = useContext(ContextValues);
 
     return <Col>
         <Card className={'text-black'}>
