@@ -1,7 +1,8 @@
-import { isDisabled } from '@testing-library/user-event/dist/utils';
-import { useContext, useEffect, useRef, useState } from 'react';
+import {  useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import ContextTheme from '../context/ContextTheme';
+import { useContext } from 'react';
 
 function FormGroup({user, setUser}){
     const refName = useRef();
@@ -9,11 +10,13 @@ function FormGroup({user, setUser}){
     const checkRef = useRef();
     const isChecked = useRef();
     const [dis, setDis] = useState(true);
+    const {setAlert} = useContext(ContextTheme)
     
 
     function saveUser(){
         setUser({login: refName.current.value, email: refEmail.current.value});
         localStorage.setItem('LastUser', JSON.stringify({login: refName.current.value, email: refEmail.current.value}));
+        setAlert(`wellcome ${refName.current.value}`);
         refName.current.value = '';
         refEmail.current.value = '';
         setDis(checkRef.current.disabled = true);

@@ -4,14 +4,13 @@ import Products from './components/Products';
 import Container from 'react-bootstrap/Container';
 import { useState } from 'react';
 import ContextTheme from './context/ContextTheme';
+import AlertMessage from './components/AlertMessage';
 
 
 function App() {
   const [theme, setTheme] = useState('bg-secondary');
-  
-  
-
-  const value = {theme, setTheme};
+  const [alert, setAlert] = useState([]);
+  const value = {theme, setTheme, alert, setAlert};
 
   return (
     <ContextTheme.Provider value={value}>
@@ -20,6 +19,7 @@ function App() {
           <img src={logo} className="App-logo" alt="logo"/>
           <Container>
             <Products/>
+            <AlertMessage/>
           </Container>
         </header>
       </div>

@@ -4,12 +4,15 @@ import Product from './Product';
 import CartGroup from './CartGroup';
 import ContextValues from '../context/ContextValues';
 import FormGroup from './FormGroup';
+import ContextTheme from '../context/ContextTheme';
+import { useContext } from 'react';
 
 
 
 function Products(){
     const [productsArr, setProductsArr] = useState([]);
     const [user, setUser] = useState({login: '', email: ''})
+    const{setAlert} = useContext(ContextTheme);
     
     useEffect(() => {
         let userInStore = localStorage.getItem('LastUser');
@@ -139,16 +142,18 @@ function Products(){
             }
         ])
     }, []);
-
     function clickAdd(id){
         setProductsArr(productsArr.map(el => ({...el, addToCart: el.id === id ? true : el.addToCart})));
+        setAlert('Product add to cart');
     }
     function clickRemove(id){
         setProductsArr(productsArr.map(el => ({...el, addToCart: el.id === id ? false : el.addToCart})));
+        setAlert('Product remove from cart');
     }
     
     function addProd(id){
         setProductsArr(productsArr.map(el => el.id === id ? ({...el, count: el.count +=1}) : el));
+        setAlert(productsArr.map(el => el.id === id ? `Нужно боольше золота для ${el.brand} ${el.model}` : ''));
     }
     function removeProd(id){
         setProductsArr(productsArr.map(el => el.id === id ? ({...el, count: el.count <= 1 ? el.count = 1 : el.count -=1}) : el));

@@ -1,13 +1,16 @@
 import Button from 'react-bootstrap/Button';
 import ContextValues from '../context/ContextValues';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import ContextTheme from '../context/ContextTheme';
 
 function AcceptProd(){
     const {user} = useContext(ContextValues);
     const [showAccept, setShowAccept] = useState(false);
+    const {setAlert} = useContext(ContextTheme);
 
     function acceptClick(){
-        setShowAccept(true)
+        setShowAccept(true);
+        setAlert('Accept your order');
     }
     setTimeout(() => {
         setShowAccept(false)
